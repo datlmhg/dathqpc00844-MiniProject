@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" xmlns:th="http://www.thymeleaf.org">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="/product/list">Home</a>
+		<div class="collapse navbar-collapse" id="navbarNavDropdown">
+			<ul class="navbar-nav">
+				<th:block th:if="${#request.remoteUser}">
+					<li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/order/list}">Your Orders</a></li>
+					<li class="nav-item dropdown">
+					    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Account</a>
+					    <ul class="dropdown-menu">
+					      <li><a class="dropdown-item" th:href="@{/security/logoff}">Sign Out</a></li>
+					      <li><a class="dropdown-item" th:href="@{/security/changePassword/form}">Change Password</a></li>
+					      <li><a class="dropdown-item" th:href="@{/security/forgotPassword/form}">Forgot Password</a></li>
+					      <li><a class="dropdown-item" th:href="@{/security/updateAccount/form}">Update Account</a></li>
+					    </ul>
+					</li>
+					<li class="nav-item" th:if="${#request.isUserInRole('AD') or #request.isUserInRole('MOD')}">
+						<a class="nav-link active"
+						aria-current="page" th:href="@{/admin/home/index}">Administration</a>
+					</li>
+				</th:block>
+				<th:block th:unless="${#request.remoteUser}">
+					<li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/security/login/form}">Sign In</a></li>
+					<li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/security/signup/form}">Sign Up</a></li>
+				</th:block>
+			</ul>
+		</div>
+	</div>
+</nav>
